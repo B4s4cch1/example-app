@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\SitioController;
+use App\Models\Contacto;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -18,11 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/contacto/{tipo?}', function ($tipo = null) {
-    //dd($tipo);
-    //return view('contacto',compact('tipo'));
-    return view('contacto')->with(['tipo' => $tipo]);
-});
+//Cuando reciba una petición de este tipo, va a ejecutar el sitio controller y después va a buscar el contactoform
+Route::get('/contacto/{tipo?}', [SitioController::class,'contactoForm']);
 
 Route::post('contacto', function (Request $request){
     //Mostrar todo
@@ -30,3 +28,5 @@ Route::post('contacto', function (Request $request){
     //mostrar solo una variable
     //dd($request->name);
 });
+
+Route::post('/contacto', [SitioController::class,'contactoSave']);
